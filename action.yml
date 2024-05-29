@@ -6,7 +6,7 @@ inputs:
     default: latest
   node_version:
     description: NodeJS version to use
-    default: "20"
+    default: 22.x
   bun_version:
     description: Bun version to use
     default: latest
@@ -15,16 +15,16 @@ runs:
   using: composite
   steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Setup Node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node_version }}
     - uses: oven-sh/setup-bun@v1
       with:
         bun-version: ${{ inputs.bun_version }}
     - name: Install pnpm
-      uses: pnpm/action-setup@v2
+      uses: pnpm/action-setup@v4
       with:
         version: ${{ inputs.pnpm_version }}
         run_install: false
@@ -34,7 +34,7 @@ runs:
       run: |
         echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_ENV
     - name: Setup pnpm cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ env.pnpm_cache_dir }}
         key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
